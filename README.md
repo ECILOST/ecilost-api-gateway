@@ -1,15 +1,24 @@
 # ECILOST API Gateway
 
-Punto de entrada transversal del sistema. Solo concentra políticas de borde: enrutamiento, CORS, correlación, límites de tasa, validación de JWT y observabilidad. Las reglas de subastas, catálogo, billetera y autenticación permanecen en sus respectivos servicios.
+Proyecto base de NestJS para un futuro punto de entrada HTTP. El código actual arranca el proceso y carga configuración. El enrutamiento, la autenticación de borde y la observabilidad distribuida están pendientes de implementación.
 
-El esqueleto no declara rutas ni proxies: la documentación disponible no prueba todavía un contrato público consolidado. Las rutas se incorporarán desde configuración y contratos versionados, no mediante dependencias de bases de datos de los servicios.
+## Inicio local
 
-```text
-src/
-  config/          Configuración transversal y destinos explícitos
-  routing/         Adaptadores de enrutamiento, cuando haya contratos
-  security/        JWT, CORS y rate limits
-  observability/   Correlation ID, logs y métricas
+```bash
+cp .env.example .env
+npm install
+npm run start:dev
 ```
 
-El puerto local reservado es `8080`; Auth permanece en `3000`.
+El proceso escucha en `PORT`, con valor local por defecto `8080`. Aún no registra rutas HTTP ni publica Swagger. En desarrollo, el frontend usa su proxy de Vite para llamar directamente a Auth, Catalog, Wallet, Auction y Engagement.
+
+## Estructura y comprobación
+
+- [Enrutamiento](src/routing/README.md)
+- [Políticas de seguridad previstas](src/security/README.md)
+- [Observabilidad prevista](src/observability/README.md)
+
+```bash
+npm run typecheck
+npm run build
+```
